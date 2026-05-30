@@ -1,0 +1,9 @@
+com.example.idttesttask.presentation-pngs-0 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/generated/res/pngs/debug
+com.example.idttesttask.presentation-updated_navigation_xml-1 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/generated/updated_navigation_xml/debug
+com.example.idttesttask.presentation-mergeDebugResources-2 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.example.idttesttask.presentation-mergeDebugResources-3 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.example.idttesttask.presentation-debug-4 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/intermediates/merged_res/debug/mergeDebugResources
+com.example.idttesttask.presentation-debug-5 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/build/intermediates/packaged_res/debug/packageDebugResources
+com.example.idttesttask.presentation-debug-6 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/src/debug/res
+com.example.idttesttask.presentation-main-7 /Users/lyutorovich.a/AndroidStudioProjects/IdtTestTask/presentation/src/main/res
+gradleHome-0 /Users/lyutorovich.a/.gradle

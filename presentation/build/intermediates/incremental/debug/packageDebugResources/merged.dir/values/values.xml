@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cell_highlight">#4CAF50</color>
+    <color name="save_text">#1565C0</color>
+    <dimen name="cell_height">64dp</dimen>
+    <dimen name="cell_width">200dp</dimen>
+    <dimen name="input_field_width">400dp</dimen>
+    <string name="cd_navigate_back">Back</string>
+    <string name="input_cols_error">Enter a number from 1 to 6</string>
+    <string name="input_cols_label">Columns (1–6)</string>
+    <string name="input_generate_button">Generate Table</string>
+    <string name="input_rows_error">Enter a number from 1 to 1000</string>
+    <string name="input_rows_label">Rows (1–1000)</string>
+    <string name="input_screen_title">Table Generator</string>
+    <string name="table_cell_save">Save</string>
+    <string name="table_screen_title">Table</string>
+</resources>
