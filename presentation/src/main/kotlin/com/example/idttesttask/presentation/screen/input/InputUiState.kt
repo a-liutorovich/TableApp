@@ -6,4 +6,5 @@ data class InputUiState(
     val rowsError: InputFieldError? = null,
     val colsError: InputFieldError? = null,
     val isLoading: Boolean = false,
+    val generationError: Boolean = false,
 )

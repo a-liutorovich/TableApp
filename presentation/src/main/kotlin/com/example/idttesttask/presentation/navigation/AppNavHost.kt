@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.idttesttask.presentation.screen.input.InputScreen
 import com.example.idttesttask.presentation.screen.table.TableScreen
 
@@ -18,9 +19,12 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
                 }
             )
         }
-        composable<TableScreenRoute> {
+        composable<TableScreenRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<TableScreenRoute>()
             TableScreen(
-                onNavigateBack = { navController.popBackStack() }
+                rows = route.rows,
+                cols = route.cols,
+                onNavigateBack = { navController.popBackStack() },
             )
         }
     }

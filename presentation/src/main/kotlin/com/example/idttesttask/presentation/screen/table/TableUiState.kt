@@ -1,21 +1,20 @@
 package com.example.idttesttask.presentation.screen.table
 
-import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
-@Immutable
 data class CellUiState(
     val id: String,
     val text: String,
     val isHighlighted: Boolean,
 )
 
-@Immutable
 data class RowUiState(
     val id: String,
-    val cells: List<CellUiState>,
+    val cells: ImmutableList<CellUiState>,
 )
 
 data class TableScreenUiState(
-    val rows: List<RowUiState> = emptyList(),
+    val rows: ImmutableList<RowUiState> = persistentListOf(),
     val isLoading: Boolean = true,
 )

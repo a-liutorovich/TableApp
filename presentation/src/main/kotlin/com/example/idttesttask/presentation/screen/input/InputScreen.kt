@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,11 +20,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,6 +71,7 @@ internal fun InputScreenContent(
     onGenerateClick: () -> Unit,
 ) {
     val fieldWidth = dimensionResource(R.dimen.input_field_width)
+    val colsFocusRequester = remember { FocusRequester() }
 
     Scaffold { paddingValues ->
         Box(
@@ -76,13 +84,15 @@ internal fun InputScreenContent(
                 CircularProgressIndicator()
             } else {
                 Column(
-                    modifier = Modifier.width(fieldWidth),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.input_screen_title),
                         style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
@@ -91,7 +101,13 @@ internal fun InputScreenContent(
                         label = { Text(stringResource(R.string.input_rows_label)) },
                         isError = state.rowsError != null,
                         supportingText = state.rowsError?.let { error -> { Text(error.asString()) } },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Next,
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { colsFocusRequester.requestFocus() },
+                        ),
                         singleLine = true,
                         modifier = Modifier.width(fieldWidth),
                     )
@@ -101,9 +117,17 @@ internal fun InputScreenContent(
                         label = { Text(stringResource(R.string.input_cols_label)) },
                         isError = state.colsError != null,
                         supportingText = state.colsError?.let { error -> { Text(error.asString()) } },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = { onGenerateClick() },
+                        ),
                         singleLine = true,
-                        modifier = Modifier.width(fieldWidth),
+                        modifier = Modifier
+                            .width(fieldWidth)
+                            .focusRequester(colsFocusRequester),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
@@ -111,6 +135,13 @@ internal fun InputScreenContent(
                         modifier = Modifier.width(fieldWidth),
                     ) {
                         Text(stringResource(R.string.input_generate_button))
+                    }
+                    if (state.generationError) {
+                        Text(
+                            text = stringResource(R.string.input_generation_error),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
                     }
                 }
             }

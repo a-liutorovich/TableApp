@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Table screen -->
-    <string name="table_screen_title">Table</string>
+    <string name="table_screen_title">Table %1$d×%2$d</string>
     <string name="table_cell_save">Save</string>
     <string name="cd_navigate_back">Back</string>
 
     <!-- Input screen -->
-    <string name="input_screen_title">Table Generator</string>
+    <string name="input_screen_title">Enter the number of columns and rows</string>
     <string name="input_rows_label">Rows (1–1000)</string>
     <string name="input_cols_label">Columns (1–6)</string>
     <string name="input_generate_button">Generate Table</string>
     <string name="input_rows_error">Enter a number from 1 to 1000</string>
     <string name="input_cols_error">Enter a number from 1 to 6</string>
+    <string name="input_generation_error">Failed to generate table. Please try again.</string>
 </resources>

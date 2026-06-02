@@ -3,7 +3,6 @@ package com.example.idttesttask.presentation.screen.input
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.idttesttask.domain.usecase.GenerateTableUseCase
-import com.example.idttesttask.domain.usecase.ValidateInputUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -11,10 +10,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
 class InputViewModel(
-    private val validateInput: ValidateInputUseCase,
     private val generateTable: GenerateTableUseCase,
 ) : ViewModel() {
 
@@ -25,11 +24,11 @@ class InputViewModel(
     val navigationEvent: SharedFlow<Pair<Int, Int>> = _navigationEvent.asSharedFlow()
 
     fun onRowsInputChange(value: String) {
-        _state.update { it.copy(rowsInput = value, rowsError = null) }
+        _state.update { it.copy(rowsInput = value, rowsError = null, generationError = false) }
     }
 
     fun onColsInputChange(value: String) {
-        _state.update { it.copy(colsInput = value, colsError = null) }
+        _state.update { it.copy(colsInput = value, colsError = null, generationError = false) }
     }
 
     fun onGenerateClick() {
@@ -44,13 +43,18 @@ class InputViewModel(
             return
         }
 
-        if (!validateInput(rows, cols)) return
-
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            generateTable(rows, cols)
-            _state.update { it.copy(isLoading = false) }
-            _navigationEvent.emit(rows to cols)
+            _state.update { it.copy(isLoading = true, generationError = false) }
+            try {
+                generateTable(rows, cols)
+                _state.update { it.copy(isLoading = false) }
+                _navigationEvent.emit(rows to cols)
+            } catch (e: CancellationException) {
+                _state.update { it.copy(isLoading = false) }
+                throw e
+            } catch (e: Exception) {
+                _state.update { it.copy(isLoading = false, generationError = true) }
+            }
         }
     }
 }
