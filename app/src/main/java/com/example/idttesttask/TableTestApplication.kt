@@ -7,11 +7,11 @@ import com.example.idttesttask.presentation.di.presentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class IdtTestTaskApplication : Application() {
+class TableTestApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidContext(this@IdtTestTaskApplication)
+            androidContext(this@TableTestApplication)
             modules(domainModule, dataModule, presentationModule)
         }
     }
